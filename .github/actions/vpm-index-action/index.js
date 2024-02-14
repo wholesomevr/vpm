@@ -28962,6 +28962,7 @@ async function main() {
     const octokit = github.getOctokit(token);
     const releases = await (await octokit.rest.repos.listReleases(github.context.repo)).data;
     for (const release of releases) {
+        console.log(release.assets);
         var package_asset = release.assets.find(asset => asset.name == 'package.json');
         if (package_asset === undefined)
             continue;
