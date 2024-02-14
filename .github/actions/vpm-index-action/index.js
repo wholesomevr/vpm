@@ -28956,7 +28956,9 @@ const fs = __importStar(__nccwpck_require__(3292));
 //run()
 main();
 async function main() {
-    const index = JSON.parse(await fs.readFile('index.json', 'utf8'));
+    const path = process.env.GITHUB_ACTION_PATH;
+    core.info(path);
+    const index = JSON.parse(await fs.readFile(`${path}/index.json`, 'utf8'));
     const http = new httpm.HttpClient();
     const token = core.getInput('token');
     const octokit = github.getOctokit(token);
