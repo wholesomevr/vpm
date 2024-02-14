@@ -28977,7 +28977,7 @@ async function main() {
         index.packages['wholesome.dependencies'].versions[package_json.version] =
             package_json;
     }
-    await fs.writeFile('index.json', index);
+    await fs.writeFile('index.json', JSON.stringify(index));
 }
 
 
