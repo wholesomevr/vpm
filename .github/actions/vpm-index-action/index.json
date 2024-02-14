@@ -1,0 +1,11 @@
+{
+    "name": "wholesome@ Package Listing",
+    "author": "wholesome@",
+    "url": "https://wholesomevr.github.io/vpm/index.json",
+    "id": "wholesome.listing",
+    "packages": {
+        "wholesome.dependencies": {
+            "versions": {}
+        }
+    }
+}

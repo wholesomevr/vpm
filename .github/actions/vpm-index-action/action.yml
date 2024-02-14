@@ -1,0 +1,17 @@
+name: 'Build VPM index'
+description: 'Build VPM index'
+
+
+# Define your inputs here.
+inputs:
+  token:
+    required: true
+
+# Define your outputs here.
+outputs:
+  time:
+    description: 'Your output description here'
+
+runs:
+  using: node20
+  main: index.js
