@@ -9,5 +9,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: .github/actions/vpm-index-action
+      - uses: ./.github/actions/vpm-index-action
       - run: cat index.json
