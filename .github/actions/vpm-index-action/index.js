@@ -28963,7 +28963,8 @@ async function main() {
     const releases = await (await octokit.rest.repos.listReleases(github.context.repo)).data;
     for (const release of releases) {
         console.log(release.assets);
-        var package_asset = release.assets.find(asset => asset.name == 'package.json');
+        var package_asset = release.assets.find(asset => asset.name === 'package.json');
+        console.log(package_asset);
         if (package_asset === undefined)
             continue;
         var package_zip = release.assets.find(asset => asset.name.endsWith('.zip'));
