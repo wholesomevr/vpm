@@ -5,11 +5,17 @@ description: 'Build VPM index'
 # Define your inputs here.
 inputs:
   token:
+    required: true
   name:
+    required: true
   author:
+    required: true
   url:
+    required: true
   id:
+    required: true
   package:
+    required: true
 
 outputs:
   index:
