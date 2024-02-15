@@ -28946,22 +28946,20 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
-const fs = __importStar(__nccwpck_require__(3292));
 main();
-const package_name = core.getInput("package");
-const index = {
-    name: core.getInput("name"),
-    author: core.getInput("author"),
-    url: core.getInput("url"),
-    id: core.getInput("id"),
-    packages: {
-        [package_name]: {
-            versions: {}
-        }
-    }
-};
 async function main() {
-    const index = JSON.parse(await fs.readFile(`.github/actions/vpm-index-action/index.json`, 'utf8'));
+    const package_name = core.getInput("package");
+    const index = {
+        name: core.getInput("name"),
+        author: core.getInput("author"),
+        url: core.getInput("url"),
+        id: core.getInput("id"),
+        packages: {
+            [package_name]: {
+                versions: {}
+            }
+        }
+    };
     const token = core.getInput('token');
     const octokit = github.getOctokit(token);
     const releases = await (await octokit.rest.repos.listReleases(github.context.repo)).data;
@@ -28985,7 +28983,7 @@ async function main() {
         package_json.url = package_zip.browser_download_url;
         if (package_json.version in index.packages[package_name].versions)
             continue;
-        index.packages[package_name].versions[package_json.version] = package_json;
+        index.packages[package_name].versions[(package_json.version)] = package_json;
     }
     core.setOutput("index", JSON.stringify(index));
 }
@@ -29054,14 +29052,6 @@ module.exports = require("events");
 
 "use strict";
 module.exports = require("fs");
-
-/***/ }),
-
-/***/ 3292:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("fs/promises");
 
 /***/ }),
 

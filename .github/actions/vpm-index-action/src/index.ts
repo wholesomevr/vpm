@@ -1,37 +1,22 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
-import * as fs from 'fs/promises'
 
 main()
 
-interface Index {
-    name?: string,
-    author?: string,
-    url?: string,
-    id?: string,
-    packages: {
-
-    }
-}
-
-const package_name = core.getInput("package");
-
-const index = {
-    name: core.getInput("name"),
-    author: core.getInput("author"),
-    url: core.getInput("url"),
-    id: core.getInput("id"),
-    packages: {
-        [package_name]: {
-            versions: {}
+async function main() {
+    const package_name = core.getInput("package");
+    const index = {
+        name: core.getInput("name"),
+        author: core.getInput("author"),
+        url: core.getInput("url"),
+        id: core.getInput("id"),
+        packages: {
+            [package_name]: {
+                versions: {} as { [version: string]: object }
+            }
         }
     }
-}
 
-async function main() {
-    const index = JSON.parse(
-        await fs.readFile(`.github/actions/vpm-index-action/index.json`, 'utf8')
-    )
     const token = core.getInput('token')
     const octokit = github.getOctokit(token)
     const releases = await (
@@ -61,7 +46,7 @@ async function main() {
 
         if (package_json.version in index.packages[package_name].versions) continue;
 
-        index.packages[package_name].versions[package_json.version] = package_json;
+        index.packages[package_name].versions[(package_json.version) as string] = package_json;
     }
     core.setOutput("index", JSON.stringify(index));
 }
