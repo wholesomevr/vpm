@@ -28973,7 +28973,14 @@ async function main() {
         var package_zip = release.assets.find(asset => asset.name.endsWith('.zip'));
         if (package_zip === undefined)
             continue;
-        var package_json = JSON.parse(await http.get(package_asset.url).then(resp => resp.readBody()));
+        var package_data = (await octokit.rest.repos
+            .getReleaseAsset({
+            ...github.context.repo,
+            asset_id: package_asset.id,
+            headers: { accept: 'application/octet-stream' }
+        })
+            .then(resp => resp.data));
+        var package_json = JSON.parse(package_data);
         package_json.url = package_zip.browser_download_url;
         if (package_json.version in index.packages['wholesome.dependencies'].versions)
             continue;
