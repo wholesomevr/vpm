@@ -28959,7 +28959,7 @@ main();
 async function main() {
     const index = JSON.parse(await fs.readFile(`.github/actions/vpm-index-action/index.json`, 'utf8'));
     const token = core.getInput('token');
-    const http = new httpm.HttpClient(undefined, [
+    const http = new httpm.HttpClient('wholesomevr', [
         new am.BearerCredentialHandler(token)
     ]);
     const octokit = github.getOctokit(token);
