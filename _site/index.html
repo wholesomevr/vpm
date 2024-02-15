@@ -3,23 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="0; url=vcc://vpm/addRepo?url=https://wholesomevr.github.io/vpm/index.json" />
+    <!-- <meta http-equiv="refresh" content="0; url=vcc://vpm/addRepo?url=https://wholesomevr.github.io/vpm/index.json" /> -->
     <title>wholesome@ Listing</title>
     <style>
         body {
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: start;
             align-items: center;
-            height: 100vh;
             margin: 0;
             background-color: black;
         }
 
+
+
+
         #logo {
-            max-width: 600px;
+            width: 600px;
             height: auto;
-            margin: 0 auto 20px;
+            margin-top: 10vh;
+            margin-bottom: 10vh;
+        }
+
+        @media screen and (max-width: 600px) {
+            #logo {
+                width: 100vw;
+            }
         }
 
         button {
