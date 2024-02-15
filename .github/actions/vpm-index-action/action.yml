@@ -5,9 +5,16 @@ description: 'Build VPM index'
 # Define your inputs here.
 inputs:
   token:
-    required: true
+  name:
+  author:
+  url:
+  id:
+  package:
 
+outputs:
+  index:
+    description: Generated index.json Package Listing
 
 runs:
   using: node20
-  main: index.js
+  main: dist/index.js

@@ -28920,10 +28920,6 @@ function wrappy (fn, cb) {
 
 "use strict";
 
-/**
- * The entrypoint for the action.
- */
-//import { run } from './main'
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -28950,18 +28946,23 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
-const httpm = __importStar(__nccwpck_require__(6255));
-const am = __importStar(__nccwpck_require__(5526));
 const fs = __importStar(__nccwpck_require__(3292));
-// eslint-disable-next-line @typescript-eslint/no-floating-promises
-//run()
 main();
+const package_name = core.getInput("package");
+const index = {
+    name: core.getInput("name"),
+    author: core.getInput("author"),
+    url: core.getInput("url"),
+    id: core.getInput("id"),
+    packages: {
+        [package_name]: {
+            versions: {}
+        }
+    }
+};
 async function main() {
     const index = JSON.parse(await fs.readFile(`.github/actions/vpm-index-action/index.json`, 'utf8'));
     const token = core.getInput('token');
-    const http = new httpm.HttpClient('wholesomevr', [
-        new am.BearerCredentialHandler(token)
-    ]);
     const octokit = github.getOctokit(token);
     const releases = await (await octokit.rest.repos.listReleases(github.context.repo)).data;
     for (const release of releases) {
@@ -28982,12 +28983,11 @@ async function main() {
             .then(resp => resp.data));
         var package_json = JSON.parse(new TextDecoder('utf-8').decode(package_data));
         package_json.url = package_zip.browser_download_url;
-        if (package_json.version in index.packages['wholesome.dependencies'].versions)
+        if (package_json.version in index.packages[package_name].versions)
             continue;
-        index.packages['wholesome.dependencies'].versions[package_json.version] =
-            package_json;
+        index.packages[package_name].versions[package_json.version] = package_json;
     }
-    await fs.writeFile('index.json', JSON.stringify(index));
+    core.setOutput("index", JSON.stringify(index));
 }
 
 
