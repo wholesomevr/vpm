@@ -28951,14 +28951,17 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 const httpm = __importStar(__nccwpck_require__(6255));
+const am = __importStar(__nccwpck_require__(5526));
 const fs = __importStar(__nccwpck_require__(3292));
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
 //run()
 main();
 async function main() {
     const index = JSON.parse(await fs.readFile(`.github/actions/vpm-index-action/index.json`, 'utf8'));
-    const http = new httpm.HttpClient();
     const token = core.getInput('token');
+    const http = new httpm.HttpClient(undefined, [
+        new am.BearerCredentialHandler(token)
+    ]);
     const octokit = github.getOctokit(token);
     const releases = await (await octokit.rest.repos.listReleases(github.context.repo)).data;
     for (const release of releases) {
