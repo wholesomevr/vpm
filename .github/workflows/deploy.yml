@@ -14,7 +14,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           name: wholesome@ Package Listing
-          author: wholesome@
+          author: wholesomevr
           url: https://wholesomevr.github.io/vpm/index.json
           id: wholesome.listing
           package: wholesome.dependencies
