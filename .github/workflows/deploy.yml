@@ -13,7 +13,7 @@ jobs:
         id: index
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          name: wholesome@ Package Listing
+          name: wholesome© Package Listing
           author: wholesomevr
           url: https://wholesomevr.github.io/vpm/index.json
           id: wholesome.listing
