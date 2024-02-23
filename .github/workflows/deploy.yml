@@ -18,7 +18,7 @@ jobs:
           url: https://wholesomevr.github.io/vpm/index.json
           id: wholesome.listing
           package: wholesome.dependencies
-      - run: echo '${{steps.index.outputs.index}}' >> _site/index.json
+      - run: echo '${{steps.index.outputs.index}}' > _site/index.json
       - uses: actions/upload-pages-artifact@v3
   deploy:
     needs: build
