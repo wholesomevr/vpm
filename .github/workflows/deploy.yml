@@ -5,8 +5,19 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  deploy:
+    permissions:
+      pages: write
+      id-token: write
+    concurrency:
+      group: "pages"
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{steps.deployment.outputs.page_url}}
+
     runs-on: ubuntu-latest
+    
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/vpm-index-action
@@ -19,22 +30,9 @@ jobs:
           id: wholesome.listing
           package: wholesome.dependencies
       - run: echo '${{steps.index.outputs.index}}' > _site/index.json
-      - uses: actions/upload-pages-artifact@v3
-  deploy:
-    needs: build
-    permissions:
-      pages: write
-      id-token: write
-    concurrency:
-      group: "pages"
-      cancel-in-progress: false
-    
-    environment:
-      name: github-pages
-      url: ${{steps.deployment.outputs.page_url}}
-    runs-on: ubuntu-latest
-    steps:
       - uses: actions/configure-pages@v4
+      - uses: actions/upload-pages-artifact@v3
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      
